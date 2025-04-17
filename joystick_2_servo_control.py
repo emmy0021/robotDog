@@ -13,6 +13,11 @@ pca.frequency = 50
 min_pulse = 560  # in microseconds
 max_pulse = 2440  # in microseconds
 
+# Define mechanical constraints
+HIP_MIN = 23
+HIP_MAX = 197
+KNEE_MIN = 21
+KNEE_MAX = 118
 
 # Create servo objects on channels 0 and 1
 servo1 = servo.Servo(pca.channels[0], min_pulse=min_pulse, max_pulse=max_pulse, actuation_range=270)
@@ -51,8 +56,8 @@ try:
             servo2_angle += right_y * increment_speed
 
         # Clamp angles
-        servo1_angle = max(0, min(270, servo1_angle))
-        servo2_angle = max(0, min(270, servo2_angle))
+        servo1_angle = max(HIP_MIN, min(HIP_MAX, servo1_angle))
+        servo2_angle = max(KNEE_MIN, min(KNEE_MAX, servo2_angle))
 
         # Update servo angles
         servo1.angle = servo1_angle
